@@ -1,0 +1,9 @@
+{
+  "name": "futmath-scout",
+  "version": "1.0.0",
+  "description": "Plataforma de Inteligência de Mercado e Scouting Esportivo via Web Scraping (Node.js + Python)",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  }
+}
