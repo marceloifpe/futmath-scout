@@ -1,0 +1,15 @@
+export type Position = "Goleiro" | "Zagueiro" | "Lateral" | "Meio-campista" | "Atacante"
+export type DataSource = { sourceName: string; sourceId: string; sourceUrl?: string; updatedAt: string; competitionId: string; season: string; dataQuality: "demo" | "licensed" | "verified" }
+export type Player = { id: string; name: string; age: number; nationality: string; clubId: string; competitionId: string; position: Position; appearances: number; minutes: number; goals: number; assists: number; shots: number; rating: number; recentChange: number; season: string; image?: string; source: DataSource }
+export type Club = { id: string; name: string; state: string; competitionId: string; season: string; color: string }
+export type Competition = { id: string; name: string; level: string }
+export type Season = { id: string; label: string }
+export type PlayerStatistics = Pick<Player, "appearances" | "minutes" | "goals" | "assists" | "shots" | "rating">
+export type PlayerPerformanceHistory = { month: string; rating: number; goals: number; assists: number }
+export type Comparison = { playerIds: string[]; season: string }
+export type Report = { id: string; title: string; type: string; createdAt: string; playerIds: string[]; season: string }
+export type User = { id: string; name: string; club: string; plan: "Free" | "Premium" }
+export type Subscription = { plan: "Free" | "Premium"; price: number }
+export type UsageQuota = { used: number; limit: number | null; renewsAt: string }
+export type PlayerFilters = { search?: string; position?: Position | "Todas"; clubId?: string; competitionId?: string; minAge?: number; maxAge?: number; minMinutes?: number; minGoals?: number; minAssists?: number; sortBy?: keyof Player; sortDirection?: "asc" | "desc" }
+export type Pagination = { page: number; pageSize: number }
