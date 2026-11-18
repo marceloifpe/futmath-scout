@@ -30,3 +30,14 @@ O sistema foi projetado utilizando uma **Arquitetura em Camadas (Layered Archite
 3. **Camada de Serviço e Coleta (Workers de Web Scraping):** Scripts automatizados em **Python** (`ogol_transfermarkt.py`) e **Node.js** (`scraper_sofascore.js`) que mineram e cruzam estatísticas de jogos, minutagem, gols e assistências em múltiplas bases abertas[cite: 17, 49, 50].
 4. **Camada de Persistência (`database.js` + `futmath.db`):** Banco de dados relacional em **SQLite** para armazenamento estruturado do histórico de carreira dos atletas e cache local das consultas[cite: 12, 18, 20].
 
+## Executar a aplicação integrada
+
+Requisitos: Node.js 22+ e npm. Na raiz do projeto:
+
+```bash
+npm --prefix frontend install
+npm run dev
+```
+
+O comando inicia a API em `http://localhost:3001` e o frontend Next.js em `http://localhost:3000`. Use `GET /api/health` para verificar a API. Para executar o frontend com a base fictícia, defina `NEXT_PUBLIC_DATA_PROVIDER=mock`.
+

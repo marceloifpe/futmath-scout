@@ -1,6 +1,6 @@
 export type Position = "Goleiro" | "Zagueiro" | "Lateral" | "Meio-campista" | "Atacante"
 export type DataSource = { sourceName: string; sourceId: string; sourceUrl?: string; updatedAt: string; competitionId: string; season: string; dataQuality: "demo" | "licensed" | "verified" }
-export type Player = { id: string; name: string; age: number; nationality: string; clubId: string; competitionId: string; position: Position; appearances: number; minutes: number; goals: number; assists: number; shots: number; rating: number; recentChange: number; season: string; image?: string; source: DataSource }
+export type Player = { id: string; name: string; age: number; nationality: string; clubId: string; clubName?: string; clubState?: string; competitionId: string; competitionName?: string; position: Position; appearances: number; minutes: number; goals: number; assists: number; shots: number; rating: number; recentChange: number; season: string; image?: string; source: DataSource }
 export type Club = { id: string; name: string; state: string; competitionId: string; season: string; color: string }
 export type Competition = { id: string; name: string; level: string }
 export type Season = { id: string; label: string }

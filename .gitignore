@@ -134,3 +134,7 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+# Runtime data and Next.js build output
+backend/futmath.db
+frontend/.next/

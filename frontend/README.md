@@ -22,16 +22,16 @@ Acesse `http://localhost:3000`.
 - `src/components/futmath-app.tsx`: telas e fluxos interativos do MVP.
 - `app/`: App Router, metadados e estilos globais.
 
-## Alternar mock e API
+## Integração com a API
 
-O modo padrão é `mock` e funciona sem backend. Para documentar a configuração local, defina:
+O modo padrão usa o backend Node.js deste repositório. O Next.js encaminha `/backend-api/*` para `http://127.0.0.1:3001/api/*`. Para apontar para outra API, defina:
 
 ```dotenv
-NEXT_PUBLIC_DATA_PROVIDER=mock
-NEXT_PUBLIC_API_BASE_URL=http://localhost:8080
+NEXT_PUBLIC_DATA_PROVIDER=api
+NEXT_PUBLIC_API_BASE_URL=https://api.exemplo.com/api
 ```
 
-A implementação `ApiPlayerRepository` existe como ponto de extensão e deliberadamente informa que a API ainda não está configurada. Nenhum endpoint foi inventado. Quando o backend Spring Boot estiver definido, implemente os métodos do repositório, o adaptador de respostas externas e os contratos/erros reais. Para selecionar `api`, use `NEXT_PUBLIC_DATA_PROVIDER=api` após configurar esses métodos.
+Use `NEXT_PUBLIC_DATA_PROVIDER=mock` apenas para executar a demonstração sem o backend. O `ApiPlayerRepository` adapta `/api/atletas` e `/api/atletas/:id` ao domínio da interface.
 
 ## Funcionalidades disponíveis
 
@@ -40,7 +40,7 @@ Landing page, login demonstrativo com perfil Free/Premium, dashboard, exploraç�
 ## Pendências para produção
 
 - Autenticação e autorização reais; o login atual é apenas simulado.
-- API REST e adaptadores para os contratos do backend.
+- Autenticação e persistência de favoritos/relatórios no backend.
 - Provedor licenciado e validado de estatísticas esportivas; os dados apresentados são fictícios.
 - Persistência no backend e enforcement de cotas no servidor. `localStorage` só é usado para estado de demonstração.
 - Geração de PDF server-side/arquivo dedicado, pagamentos e testes automatizados abrangentes.

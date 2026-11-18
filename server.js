@@ -16,7 +16,7 @@ const {
     obterHistoricoRealAtletaSofaScore
 } = require('./backend/scraper_sofascore');
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 let requisicoesDiariasUsadas = 14;
 const LIMITE_PLANO_GRATIS = 100;
 
@@ -55,6 +55,10 @@ const server = http.createServer(async (req, res) => {
     const pathname = parsedUrl.pathname;
 
     try {
+        if (req.method === 'GET' && pathname === '/api/health') {
+            return responderJson(res, 200, { sucesso: true, servico: 'futmath-api' });
+        }
+
         // 1. Servir Frontend da Raiz (index.html e app.js)
         if (req.method === 'GET' && pathname === '/app.js') {
             const conteudo = fs.readFileSync(path.join(__dirname, 'app.js'), 'utf-8');
@@ -81,16 +85,21 @@ const server = http.createServer(async (req, res) => {
             const termo = body.termo || 'todos';
             const scriptPath = path.join(__dirname, 'backend', 'scrapers', 'ogol_transfermarkt.py');
 
-            execFile('python3', [scriptPath, termo], (error, stdout) => {
+            const pythonCommand = process.platform === 'win32' ? 'python' : 'python3';
+            execFile(pythonCommand, [scriptPath, termo], (error, stdout) => {
                 if (error) {
                     return responderJson(res, 500, { sucesso: false, erro: 'Erro ao executar motor Python' });
                 }
-                const dados = JSON.parse(stdout);
-                return responderJson(res, 200, {
-                    ...dados,
-                    cota_usada: requisicoesDiariasUsadas,
-                    cota_limite: LIMITE_PLANO_GRATIS
-                });
+                try {
+                    const dados = JSON.parse(stdout);
+                    return responderJson(res, 200, {
+                        ...dados,
+                        cota_usada: requisicoesDiariasUsadas,
+                        cota_limite: LIMITE_PLANO_GRATIS
+                    });
+                } catch (_) {
+                    return responderJson(res, 502, { sucesso: false, erro: 'Resposta inválida do motor Python' });
+                }
             });
             return;
         }

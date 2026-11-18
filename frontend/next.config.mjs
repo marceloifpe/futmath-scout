@@ -1,6 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: { unoptimized: true },
+  async rewrites() {
+    return [{
+      source: '/backend-api/:path*',
+      destination: `${process.env.API_SERVER_URL || 'http://127.0.0.1:3001'}/api/:path*`,
+    }]
+  },
   async headers() {
     return [{
       source: '/(.*)',
